@@ -10,6 +10,10 @@ const editorTitle = document.querySelector("#editor-title");
 const editorStatus = document.querySelector("#editor-status");
 const listElement = document.querySelector("#saved-regex-list");
 const emptyMessage = document.querySelector("#options-empty-message");
+const testTextInput = document.querySelector("#test-text");
+const testStatus = document.querySelector("#test-status");
+const matchPreview = document.querySelector("#match-preview");
+const replacementResult = document.querySelector("#replacement-result");
 
 let regexItems = [];
 let editingId = null;
@@ -23,6 +27,76 @@ async function init() {
 
   saveButton.addEventListener("click", saveRegex);
   cancelButton.addEventListener("click", resetEditor);
+  [patternInput, replacementInput, flagsInput, testTextInput].forEach((input) => {
+    input.addEventListener("input", updateTestPreview);
+  });
+}
+
+function updateTestPreview() {
+  const pattern = patternInput.value;
+  const flags = flagsInput.value.trim();
+  const source = testTextInput.value;
+
+  matchPreview.replaceChildren();
+  replacementResult.textContent = "";
+
+  if (!pattern || !source) {
+    testStatus.textContent = "正規表現とテキストを入力すると結果を表示します。";
+    testStatus.classList.add("muted");
+    return;
+  }
+
+  try {
+    const regex = new RegExp(pattern, flags);
+    const matches = collectMatches(regex, source);
+    renderMatches(source, matches);
+    replacementResult.textContent = source.replace(new RegExp(pattern, flags), replacementInput.value);
+    testStatus.textContent = matches.length === 0
+      ? "マッチなし"
+      : `${matches.length}件マッチしました。`;
+    testStatus.classList.toggle("muted", matches.length === 0);
+  } catch (error) {
+    testStatus.textContent = `正規表現エラー: ${error.message}`;
+    testStatus.classList.remove("muted");
+  }
+}
+
+function collectMatches(regex, source) {
+  const matches = [];
+  let match;
+
+  while ((match = regex.exec(source)) !== null) {
+    matches.push({ index: match.index, length: match[0].length });
+
+    if (!regex.global && !regex.sticky) {
+      break;
+    }
+    if (match[0].length === 0) {
+      const currentCharacter = source.codePointAt(regex.lastIndex);
+      regex.lastIndex += regex.unicode && currentCharacter > 0xFFFF ? 2 : 1;
+    }
+  }
+
+  return matches;
+}
+
+function renderMatches(source, matches) {
+  let cursor = 0;
+
+  for (const match of matches) {
+    matchPreview.append(document.createTextNode(source.slice(cursor, match.index)));
+
+    const marker = document.createElement("mark");
+    marker.textContent = match.length === 0 ? "\u200b" : source.slice(match.index, match.index + match.length);
+    if (match.length === 0) {
+      marker.className = "zero-width-match";
+      marker.title = "ゼロ幅一致";
+    }
+    matchPreview.append(marker);
+    cursor = match.index + match.length;
+  }
+
+  matchPreview.append(document.createTextNode(source.slice(cursor)));
 }
 
 async function saveRegex() {
@@ -131,6 +205,7 @@ function startEdit(item) {
   replacementInput.value = item.replacement ?? "";
   flagsInput.value = item.flags ?? "";
   editorStatus.textContent = "";
+  updateTestPreview();
 
   nameInput.focus();
 }
@@ -149,6 +224,8 @@ function resetEditor(options = {}) {
   if (!options.preserveStatus) {
     editorStatus.textContent = "";
   }
+
+  updateTestPreview();
 }
 
 async function deleteItem(id) {

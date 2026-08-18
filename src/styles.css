@@ -33,6 +33,12 @@ h2 {
   margin: 18px 0 8px;
 }
 
+h3,
+h4 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
 label {
   display: block;
   margin-bottom: 12px;
@@ -147,4 +153,57 @@ button:disabled {
   margin-top: 8px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+.regex-tester {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, CanvasText 16%, transparent);
+}
+
+.regex-tester summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.regex-tester-content {
+  margin-top: 14px;
+}
+
+.test-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.text-preview {
+  box-sizing: border-box;
+  min-height: 150px;
+  max-height: 320px;
+  margin: 0;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+  border-radius: 7px;
+  background: color-mix(in srgb, CanvasText 4%, Canvas);
+  font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.text-preview mark {
+  padding: 0;
+  background: #ffd54f;
+  color: #202124;
+}
+
+.text-preview mark.zero-width-match {
+  border-left: 2px solid #e37400;
+}
+
+@media (max-width: 640px) {
+  .test-results {
+    grid-template-columns: 1fr;
+  }
 }

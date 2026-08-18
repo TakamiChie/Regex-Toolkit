@@ -36,6 +36,27 @@
         <input id="regex-flags" type="text" value="g" placeholder="例: gim">
       </label>
 
+      <details class="regex-tester">
+        <summary>正規表現テスト</summary>
+        <div class="regex-tester-content">
+          <label>
+            テストするテキスト
+            <textarea id="test-text" rows="8" placeholder="複数行のテキストを入力してください"></textarea>
+          </label>
+          <p id="test-status" class="status muted" role="status">正規表現とテキストを入力すると結果を表示します。</p>
+          <div class="test-results">
+            <div>
+              <h4>マッチ箇所</h4>
+              <pre id="match-preview" class="text-preview" aria-label="マッチ箇所のプレビュー"></pre>
+            </div>
+            <div>
+              <h4>置換後</h4>
+              <pre id="replacement-result" class="text-preview" aria-label="置換後のプレビュー"></pre>
+            </div>
+          </div>
+        </div>
+      </details>
+
       <div class="actions">
         <button id="save-regex" type="button">追加</button>
         <button id="cancel-edit" class="secondary" type="button" hidden>編集をキャンセル</button>
