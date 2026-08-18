@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Clipboard Regex Processor",
+  "name": "Regex Toolkit",
   "version": "1.0.0",
   "description": "クリップボードのHTML/テキストに保存済み正規表現を順番に適用します。",
   "permissions": [
@@ -9,7 +9,7 @@
     "storage"
   ],
   "action": {
-    "default_title": "Clipboard Regex Processor",
+    "default_title": "Regex Toolkit",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
@@ -19,7 +19,7 @@
         "default": "Ctrl+Shift+Y",
         "mac": "Command+Shift+Y"
       },
-      "description": "Clipboard Regex Processor を開く"
+      "description": "Regex Toolkit を開く"
     }
   }
 }
