@@ -10,9 +10,9 @@
   ],
   "action": {
     "default_title": "Regex Toolkit",
-    "default_popup": "popup.html"
+    "default_popup": "src/popup.html"
   },
-  "options_page": "options.html",
+  "options_page": "src/options.html",
   "commands": {
     "_execute_action": {
       "suggested_key": {
