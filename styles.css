@@ -1,0 +1,150 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.popup-page {
+  min-width: 340px;
+}
+
+.panel,
+.settings-page {
+  padding: 16px;
+}
+
+.settings-page {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 1.35rem;
+}
+
+h2 {
+  font-size: 1rem;
+  margin: 18px 0 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+input[type="text"],
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  font: inherit;
+}
+
+.checklist {
+  max-height: 260px;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+  border-radius: 8px;
+}
+
+.check-row,
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 9px 10px;
+}
+
+.check-row + .check-row {
+  border-top: 1px solid color-mix(in srgb, CanvasText 12%, transparent);
+}
+
+.option-row {
+  margin-top: 14px;
+  padding-inline: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.actions.compact {
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 7px;
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+  background: #1a73e8;
+  color: white;
+}
+
+button.secondary {
+  background: color-mix(in srgb, CanvasText 15%, Canvas);
+  color: CanvasText;
+}
+
+button.danger {
+  background: #b3261e;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.status {
+  min-height: 1.2em;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.muted {
+  opacity: 0.7;
+}
+
+.editor-card,
+.regex-card {
+  border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.regex-cards {
+  display: grid;
+  gap: 12px;
+}
+
+.regex-card-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.regex-card code {
+  display: block;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.replacement-preview {
+  margin-top: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

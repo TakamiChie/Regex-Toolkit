@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clipboard Regex Processor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="popup-page">
+  <main class="panel">
+    <h1>クリップボード置換</h1>
+
+    <section>
+      <h2>実行する正規表現</h2>
+      <div id="regex-list" class="checklist"></div>
+      <p id="empty-message" class="muted" hidden>正規表現が未登録です。設定画面から追加してください。</p>
+    </section>
+
+    <label class="option-row">
+      <input id="html-to-markdown" type="checkbox">
+      <span>HTMLテキストをMarkdownに変換してから実行</span>
+    </label>
+
+    <div class="actions">
+      <button id="run-button" type="button">実行</button>
+      <button id="open-options" class="secondary" type="button">設定</button>
+    </div>
+
+    <p id="status" class="status" role="status"></p>
+  </main>
+
+  <script src="turndown.js"></script>
+  <script src="clipboard.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Clipboard Regex Processor",
+  "version": "1.0.0",
+  "description": "クリップボードのHTML/テキストに保存済み正規表現を順番に適用します。",
+  "permissions": [
+    "clipboardRead",
+    "clipboardWrite",
+    "storage"
+  ],
+  "action": {
+    "default_title": "Clipboard Regex Processor",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Clipboard Regex Processor を開く"
+    }
+  }
+}
