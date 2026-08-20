@@ -61,16 +61,37 @@ textarea {
 }
 
 .check-row,
+.check-label,
 .option-row {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.check-row,
+.option-row {
   margin: 0;
   padding: 9px 10px;
 }
 
+.check-label {
+  min-width: 0;
+  flex: 1;
+  margin: 0;
+}
+
+.check-label span {
+  overflow-wrap: anywhere;
+}
+
 .check-row + .check-row {
   border-top: 1px solid color-mix(in srgb, CanvasText 12%, transparent);
+}
+
+.single-run-button {
+  flex: none;
+  padding: 5px 8px;
+  font-size: 0.8rem;
 }
 
 .option-row {

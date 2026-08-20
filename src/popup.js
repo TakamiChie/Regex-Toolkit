@@ -29,7 +29,7 @@ async function init() {
   renderRegexList(checkedRegexIds);
 
   htmlToMarkdownElement.addEventListener("change", savePopupState);
-  runButton.addEventListener("click", runProcessing);
+  runButton.addEventListener("click", () => runProcessing());
   openOptionsButton.addEventListener("click", () => chrome.runtime.openOptionsPage());
 }
 
@@ -38,8 +38,11 @@ function renderRegexList(checkedRegexIds) {
   emptyMessageElement.hidden = regexItems.length !== 0;
 
   for (const item of regexItems) {
+    const row = document.createElement("div");
+    row.className = "check-row";
+
     const label = document.createElement("label");
-    label.className = "check-row";
+    label.className = "check-label";
     label.title = formatRegexTitle(item);
 
     const checkbox = document.createElement("input");
@@ -52,7 +55,16 @@ function renderRegexList(checkedRegexIds) {
     name.textContent = item.name;
 
     label.append(checkbox, name);
-    regexListElement.append(label);
+
+    const runSingleButton = document.createElement("button");
+    runSingleButton.className = "secondary single-run-button";
+    runSingleButton.type = "button";
+    runSingleButton.textContent = "単独実行";
+    runSingleButton.title = `${item.name}だけを実行`;
+    runSingleButton.addEventListener("click", () => runProcessing([item], runSingleButton));
+
+    row.append(label, runSingleButton);
+    regexListElement.append(row);
   }
 }
 
@@ -71,19 +83,20 @@ async function savePopupState() {
   });
 }
 
-async function runProcessing() {
-  runButton.disabled = true;
+async function runProcessing(itemsToRun = null, triggerButton = runButton) {
+  triggerButton.disabled = true;
   statusElement.textContent = "処理中…";
 
   try {
-    await savePopupState();
-
-    const checkedIds = new Set(
-      [...document.querySelectorAll("input[data-regex-id]:checked")]
-        .map((element) => element.dataset.regexId)
-    );
-
-    const selectedItems = regexItems.filter((item) => checkedIds.has(item.id));
+    let selectedItems = itemsToRun;
+    if (selectedItems === null) {
+      await savePopupState();
+      const checkedIds = new Set(
+        [...document.querySelectorAll("input[data-regex-id]:checked")]
+          .map((element) => element.dataset.regexId)
+      );
+      selectedItems = regexItems.filter((item) => checkedIds.has(item.id));
+    }
     const clipboard = await readClipboardPayload();
 
     let content = clipboard.content;
@@ -113,6 +126,6 @@ async function runProcessing() {
     console.error(error);
     statusElement.textContent = `エラー: ${error.message}`;
   } finally {
-    runButton.disabled = false;
+    triggerButton.disabled = false;
   }
 }
